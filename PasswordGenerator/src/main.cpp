@@ -245,6 +245,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                 savePassword(currentPassword);
             }
 
+            ImGui::SetCursorPos(ImVec2(500, 250));
+            ImGui::SetNextItemWidth(150);
+            char buf[128] = "";
+            ImGui::InputText("Custom Password", buf, IM_ARRAYSIZE(buf));
+
             ImGui::SetCursorPos(ImVec2(50,425));
             ImGui::Text("Made by @Plowh");
 
