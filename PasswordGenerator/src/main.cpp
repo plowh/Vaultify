@@ -87,6 +87,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     //button styles
     ImVec4 btn      = ImVec4(0.4f, 0.4f, 0.9f, 1.0f);  
     ImVec4 btn_hover= ImVec4(0.6f, 0.4f, 0.9f, 1.0f);
+    ImVec4 btn_active = ImVec4(0.3f, 0.3f, 0.75f, 1.0f);
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(hwnd);
     ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
@@ -223,6 +224,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
             ImGui::PushStyleColor(ImGuiCol_Button, btn);
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, btn_hover);
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, btn_active);
 
             //assign generated password to currentPassword variable
             ImGui::SetCursorPos(ImVec2(500,100));
@@ -259,6 +261,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             ImGui::Text("Made by @Plowh");
 
             ImGui::PopFont();
+            ImGui::PopStyleColor();
             ImGui::PopStyleColor();
             ImGui::PopStyleColor();
             ImGui::PopStyleColor();
