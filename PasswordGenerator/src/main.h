@@ -5,3 +5,4 @@ std::string generatePassword(const int numLowercaseLetters, const int numUpperca
 
 void savePassword(std::string currentPassword);
 bool IsInTitleBar(HWND hwnd, LPARAM lParam);
+void saveCustomPassword(std::string customPassword);

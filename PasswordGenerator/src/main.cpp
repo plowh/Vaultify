@@ -238,17 +238,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             }
 
             ImGui::SetCursorPos(ImVec2(500, 50));
-            ImGui::Text("Generated Password: %s", currentPassword.c_str()); //display generated password once button is clicked
+            ImGui::Text("Password: %s", currentPassword.c_str()); //display generated password once button is clicked
 
             ImGui::SetCursorPos(ImVec2(500, 200));
             if(ImGui::Button("Save Password", ImVec2(200, 30))) {
                 savePassword(currentPassword);
             }
 
-            ImGui::SetCursorPos(ImVec2(500, 250));
-            ImGui::SetNextItemWidth(150);
-            char buf[128] = "";
-            ImGui::InputText("Custom Password", buf, IM_ARRAYSIZE(buf));
+            static char customPassword[128] = "";  // persists between frames
+            ImGui::SetCursorPos(ImVec2(500, 300));
+            ImGui::SetNextItemWidth(200);
+            ImGui::InputText("", customPassword, IM_ARRAYSIZE(customPassword));
+
+            ImGui::SetCursorPos(ImVec2(500, 350));
+            if (ImGui::Button("Save Custom Password", ImVec2(200, 30))) {
+                saveCustomPassword(customPassword);
+            }
 
             ImGui::SetCursorPos(ImVec2(50,425));
             ImGui::Text("Made by @Plowh");
@@ -431,5 +436,12 @@ void savePassword(std::string currentPassword) {
 
     std::ofstream file("SavedPasswords.txt", std::fstream::app);
     file << currentPassword << std::endl;
+    file.close();
+}
+
+void saveCustomPassword(std::string customPassword) {
+
+    std::ofstream file("SavedPasswords.txt", std::fstream::app);
+    file << customPassword << std::endl;
     file.close();
 }
