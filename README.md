@@ -6,6 +6,7 @@ Vaultify is a password generator tool that allows users to customize the length 
 - Customizable password length
 - Select how many lowercase, uppercase, numeric, and special characters to include
 - Shuffle the generated password for randomness
+- Save your own custom passwords to a text file
 - Built using **ImGui**, **DirectX 11**, and **C++**
 
 ## Requirements
@@ -60,7 +61,7 @@ std::string generatePassword(const int numLowercaseLetters, const int numUpperca
 ```
 ## File Saving
 
-You can save your password to a file now. The passwords will keep being written into the same file so you don't have 20 different files for all your passwords.
+You can save your password to a file. The passwords will keep being written into the same file, so you don't have 20 different files for all your passwords.
 ```cpp
 	void savePassword(std::string currentPassword) {
 
@@ -70,10 +71,20 @@ You can save your password to a file now. The passwords will keep being written 
 }
 ```
 
+Additionally, you can save custom passwords to the same file.
+```cpp
+	void saveCustomPassword(std::string customPassword) {
+
+    std::ofstream file("SavedPasswords.txt", std::fstream::app);
+    file << customPassword << std::endl;
+    file.close();
+}
+```
+
 ## ImGui GUI Setup
 The ImGui interface is used to allow the user to choose how many characters of each type (lowercase, uppercase, numeric, special characters) they want to include in the generated password.
 ```cpp
-                ImGui::Begin("Vaultify", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);     //ImGuiWindowFlags_NoTitleBar  - removes native imgui titlebar
+        ImGui::Begin("Vaultify", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar);     //ImGuiWindowFlags_NoTitleBar  - removes native imgui titlebar
     
     
     ImGui::PushFont(mainFont);
@@ -114,20 +125,20 @@ The ImGui interface is used to allow the user to choose how many characters of e
     ImGui::PopItemWidth();
 
     ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.2f, 0.2f, 1));
-    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.3f, 0.3f, 1));
-    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.3f, 0.3f, 0.3f, 1));
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.2f, 0.2f, 1));
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.2f, 0.2f, 1));
 
     ImGui::SetCursorPos(ImVec2(870, 5));
     if (ImGui::Button("X", ImVec2(30, 30))) {
         PostQuitMessage(0); 
     }
 
-   
 
     ImGui::PopStyleColor(3);
 
     ImGui::PushStyleColor(ImGuiCol_Button, btn);
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, btn_hover);
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, btn_active);
 
     //assign generated password to currentPassword variable
     ImGui::SetCursorPos(ImVec2(500,100));
@@ -143,11 +154,21 @@ The ImGui interface is used to allow the user to choose how many characters of e
     }
 
     ImGui::SetCursorPos(ImVec2(500, 50));
-    ImGui::Text("Generated Password: %s", currentPassword.c_str()); //display generated password once button is clicked
+    ImGui::Text("Password: %s", currentPassword.c_str()); //display generated password once button is clicked
 
     ImGui::SetCursorPos(ImVec2(500, 200));
     if(ImGui::Button("Save Password", ImVec2(200, 30))) {
         savePassword(currentPassword);
+    }
+
+    static char customPassword[128] = "";  // persists between frames
+    ImGui::SetCursorPos(ImVec2(500, 300));
+    ImGui::SetNextItemWidth(200);
+    ImGui::InputText("", customPassword, IM_ARRAYSIZE(customPassword));
+
+    ImGui::SetCursorPos(ImVec2(500, 350));
+    if (ImGui::Button("Save Custom Password", ImVec2(200, 30))) {
+        saveCustomPassword(customPassword);
     }
 
     ImGui::SetCursorPos(ImVec2(50,425));
@@ -161,9 +182,9 @@ The ImGui interface is used to allow the user to choose how many characters of e
     ImGui::PopStyleColor();
     ImGui::PopStyleColor();
     ImGui::PopStyleColor();
+    ImGui::PopStyleColor();
     ImGui::End();
 }
-        }
 ```
 ## Acknowledgements
 
