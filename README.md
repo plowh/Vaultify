@@ -17,7 +17,8 @@ Vaultify is a password generator tool that allows users to customize the length 
   
 ## Menu 
 
-![image](https://github.com/user-attachments/assets/a4be16ed-c530-4b2a-8560-9f8edc001c0e)
+<img width="898" height="496" alt="image" src="https://github.com/user-attachments/assets/72384a6e-04da-4cff-a768-fd4966bc50e5" />
+
 
 ## Code Overview
 
